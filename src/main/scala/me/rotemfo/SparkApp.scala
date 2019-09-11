@@ -34,13 +34,15 @@ object SparkApp {
       .sorted
 
     logger.info(s"$tables")
+    val runtime = Runtime.getRuntime
+    val cores = BigDecimal(runtime.availableProcessors() * 0.9).setScale(0, BigDecimal.RoundingMode.HALF_UP)
 
     val spark = SparkSession
       .builder()
       .appName("my-app")
       .master("local[*]")
-      .config("spark.executor.cores", 4)
-      .config("spark.executor.memory", "8g")
+      .config("spark.executor.cores", cores.toString)
+      .config("spark.executor.memory", "16g")
       .getOrCreate()
 
     tables.foreach(table => {
