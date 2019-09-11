@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+    <appender name="jsonFileAppender" class="org.apache.log4j.rolling.RollingFileAppender">
+        <rollingPolicy name="file" class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+            <param name="ActiveFileName" value="${LOG_OUTPUT_PATH}/json/${JOB_NAME}-${EXECUTOR_ID}.json.log"/>
+            <param name="FileNamePattern" value="${LOG_OUTPUT_PATH}/json/${JOB_NAME}-${EXECUTOR_ID}.%d{dd-MMM}.json.log"/>
+        </rollingPolicy>
+        <layout class="net.logstash.log4j.JSONEventLayoutV1">
+            <param name="UserFields" value="jobName:${JOB_NAME},appId:${APP_ID},scheduledJobId:${SCHEDULED_JOB_ID}" />
+        </layout>
+    </appender>
+
+    <appender name="fileAppender" class="org.apache.log4j.rolling.RollingFileAppender">
+        <rollingPolicy name="file" class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+            <param name="ActiveFileName" value="${LOG_OUTPUT_PATH}/logs/${JOB_NAME}-${EXECUTOR_ID}.log"/>
+            <param name="FileNamePattern" value="${LOG_OUTPUT_PATH}/logs/${JOB_NAME}-${EXECUTOR_ID}.%d{dd-MMM}.log"/>
+        </rollingPolicy>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="console-dev" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="com.upstreamsecurity">
+        <level value="INFO"/>
+    </logger>
+
+
+    <logger name="org.spark_project.jetty">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.spark">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.hadoop">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="hive.metastore">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.parquet">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.kafka">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.spark.groupon.metrics.SparkCounter">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache.commons.crypto.NativeCodeLoader">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="com.github.fommil.netlib">
+        <level value="ERROR"/>
+    </logger>
+
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="jsonFileAppender" />
+        <appender-ref ref="fileAppender" />
+        <appender-ref ref="console-dev" />
+    </root>
+</log4j:configuration>
