@@ -45,6 +45,8 @@ object SparkApp {
       .config("spark.executor.memory", "16g")
       .getOrCreate()
 
+    logger.info(s"${spark.conf.getAll}")
+
     tables.foreach(table => {
       val customSchema = schemaMap(table)
       val path = s"$dir${File.separator}$table"
