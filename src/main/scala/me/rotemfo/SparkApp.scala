@@ -58,7 +58,10 @@ object SparkApp {
       val outputDir = baseDir.mkString(File.separator)
       val tableOutputDir = s"$outputDir/sorted/$table"
       FileUtils.deleteQuietly(new File(tableOutputDir))
-      df.sort("timestamp", "configurationid").rdd.saveAsTextFile(tableOutputDir)
+      df.sort("timestamp", "configurationid")
+        .coalesce(1)
+        .rdd
+        .saveAsTextFile(tableOutputDir)
     })
     spark.stop()
   }
