@@ -30,7 +30,6 @@ object SparkApp {
       .asScala
       .map(_.getName)
       .filterNot(_.equals(filterDir))
-      .filterNot(_.equals("records"))
       .toSeq
       .sorted
 
