@@ -1,4 +1,4 @@
-import sbtassembly.AssemblyPlugin.autoImport
+
 
 name := "spark-app"
 
@@ -12,7 +12,9 @@ resolvers ++= Seq(
 )
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql"       % "2.4.4",
-  "ch.qos.logback"   % "logback-classic" % "1.2.3"
+  "com.databricks"   %% "spark-csv"       % "1.5.0",
+  "ch.qos.logback"    % "logback-classic" % "1.2.3",
+  "org.joda"          % "joda-convert"    % "1.8.3"
 )
 // in case you have a higher version of jackson-databind in your code, add the following:
 dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.7.1"
